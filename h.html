@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARINE - أثاث مكتبي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3CDDD3;
+            --primary-dark: #1e7167;
+            --secondary: #e76f51;
+            --dark: #264653;
+            --light: #f8f9fa;
+            --accent: #e9c46a;
+            --gray: #e9ecef;
+            --text: #343a40;
+            --shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden; /* منع التمرير الأفقي غير المرغوب فيه */
+        }
+
+        /* تنسيق الهيدر المحسّن */
+        .header-top {
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .logo h2 {
+            color: var(--accent);
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-top: 0.2rem;
+            color: var(--light);
+            letter-spacing: 1px;
+        }
+
+        /* القائمة الجانبية */
+        .menu-toggle {
+            display: none;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: var(--dark);
+            cursor: pointer;
+            z-index: 1001;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .menu-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100%;
+            background: var(--light);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+            transition: 0.4s;
+            z-index: 999;
+            padding-top: 80px;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: rgba(42, 157, 143, 0.1);
+        }
+
+        .nav-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        /* قائمة سطح المكتب المحسنة */
+        .desktop-nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .desktop-nav a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 10px 22px;
+            border-radius: 30px;
+            border: 2px solid rgba(233, 196, 106, 0.3);
+            background: rgba(38, 70, 83, 0.8);
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .desktop-nav a:hover {
+            background: var(--accent);
+            color: var(--dark);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px 5px;
+            width: 100%;
+            max-width: 100%; /* ضمان عدم تجاوز العرض */
+            overflow-x: hidden; /* منع التمرير الأفقي */
+        }
+        
+        /* تنسيقات الأقسام المحسنة */
+        .category-section {
+            margin-bottom: 70px;
+            padding: 20px;
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto 70px;
+            box-sizing: border-box;
+        }
+
+        .section-divider {
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--dark), var(--primary));
+            margin: 50px auto;
+            width: 90%;
+            border-radius: 10px;
+            opacity: 0.7;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            padding: 0 25px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .category-title {
+            font-size: 2.2rem;
+            color: var(--dark);
+            position: relative;
+            padding-right: 25px;
+            font-weight: 800;
+        }
+
+        .category-title::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: -12px;
+            width: 80px;
+            height: 5px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* حاوية المنتجات الأفقية المحسنة */
+        .products-container {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .scrollable-row {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 20px 0;
+            gap: 30px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .scrollable-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .product-card {
+            flex: 0 0 360px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-title {
+            color: var(--dark);
+            margin-bottom: 12px;
+            font-size: 1.25rem;
+            line-height: 1.4;
+            font-weight: 700;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-price {
+            color: var(--primary);
+            font-size: 1.8rem;
+            font-weight: 900;
+            display: block;
+            margin: 15px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .product-specs {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        .product-specs div {
+            padding: 7px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .product-specs div:last-child {
+            border-bottom: none;
+        }
+
+        .sold-badge {
+            display: inline-block;
+            background: rgba(231, 111, 81, 0.15);
+            color: var(--secondary);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 10;
+            transition: var(--transition);
+            border: none;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        .scroll-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .scroll-btn.left {
+            right: -25px;
+        }
+
+        .scroll-btn.right {
+            left: -25px;
+        }
+
+        .load-more {
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 14px 45px;
+            border-radius: 35px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: block;
+            margin: 40px auto 0;
+            font-size: 1.15rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .load-more::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.5s ease;
+            z-index: -1;
+        }
+
+        .load-more:hover::before {
+            width: 100%;
+        }
+
+        .load-more:hover {
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        /* التجاوب */
+        @media (max-width: 1200px) {
+            .category-section {
+                max-width: 1000px;
+            }
+            
+            .products-container {
+                max-width: 1000px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .product-card {
+                flex: 0 0 320px;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .lightning-deal {
+                flex: 0 0 240px;
+            }
+            
+            .category-section {
+                padding: 20px 15px;
+            }
+            
+            .products-container {
+                padding: 0 15px;
+            }
+        }
+
+        @media (min-width: 993px) {
+            .sidebar {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                padding: 0.8rem 1.2rem;
+            }
+            
+            .logo h2 {
+                font-size: 1.7rem;
+            }
+            
+            .product-card {
+                flex: 0 0 280px;
+            }
+            
+            .lightning-deal {
+                flex: 0 0 220px;
+            }
+            
+            .category-title {
+                font-size: 1.8rem;
+            }
+            
+            .scroll-btn {
+                display: none; /* إخفاء أزرار التمرير على الأجهزة الصغيرة */
+            }
+        }
+
+        footer {
+            display: flex;
+            flex-direction: column;
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 40px 20px 20px;
+            width: 100%;
+            margin-top: auto;
+            position: relative;
+        }
+        
+        .footer-wave {
+            position: absolute;
+            top: -60px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        
+        .footer-wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 60px;
+        }
+        
+        .footer-wave .shape-fill {
+            fill: var(--dark);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            padding: 20px;
+            z-index: 2;
+        }
+        
+        .footer-section {
+            position: relative;
+            padding: 15px;
+        }
+        
+        .footer-section h4 {
+            color: var(--accent);
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .footer-section a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            display: flex;
+            margin: 15px 0;
+            align-items: center;
+            transition: var(--transition);
+            gap: 12px;
+            padding: 8px 0;
+            font-size: 1.05rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .footer-section p {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            position: relative;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding: 20px 0 10px;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            z-index: 2;
+        }
+        
+        .office-header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 80px 20px 60px;
+            margin-bottom: 50px;
+            border-radius: 0 0 40px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .office-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/45-degree-fabric-light.png');
+            opacity: 0.1;
+        }
+        
+        .office-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .office-header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* تنسيق الصفقات الخاطفة المحسّن */
+        .lightning-deals-section {
+            background: white;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            margin: 40px auto;
+            max-width: 1400px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .deals-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 15px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .deals-title {
+            font-size: 2.2rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 800;
+        }
+        
+        .deals-title i {
+            color: var(--accent);
+            background: rgba(233, 196, 106, 0.2);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+        
+        .view-all-link {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(42, 157, 143, 0.3);
+        }
+        
+        .view-all-link:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(42, 157, 143, 0.4);
+        }
+        
+        .deals-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scrollbar-width: none;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .deals-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .lightning-deal {
+            flex: 0 0 300px;
+            background: white;
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lightning-deal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+        }
+        
+        .lightning-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary);
+            color: white;
+            font-size: 0.9rem;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 3px 10px rgba(231, 111, 81, 0.3);
+        }
+        
+        .lightning-deal:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        
+        .deal-image {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+            margin: 20px 0;
+            transition: var(--transition);
+        }
+        
+        .lightning-deal:hover .deal-image {
+            transform: scale(1.05);
+        }
+        
+        .deal-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--secondary);
+            margin: 15px 0;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .deal-price::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .deal-sold {
+            font-size: 1rem;
+            color: var(--dark);
+            background: rgba(233, 196, 106, 0.2);
+            padding: 8px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+        
+        .deal-name {
+            font-size: 1.25rem;
+            color: var(--dark);
+            margin-top: 15px;
+            font-weight: 700;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .deal-specs {
+            font-size: 0.95rem;
+            color: #666;
+            margin-top: 10px;
+            padding: 0 10px;
+        }
+        
+        .time-offer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(45deg, var(--accent), #f4a261);
+            color: var(--dark);
+            border-radius: 15px;
+            margin: 30px 0;
+            font-weight: 800;
+            font-size: 1.4rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(233, 196, 106, 0.3);
+            border: none;
+        }
+        
+        .time-offer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/crissxcross.png');
+            opacity: 0.15;
+        }
+        
+        .featured-product {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+            border: 2px dashed var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-product::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/light-wool.png');
+            opacity: 0.2;
+        }
+        
+        .featured-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .featured-specs {
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin: 10px 0;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .featured-price {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--secondary);
+            margin: 20px 0;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .promo-offer {
+            background: linear-gradient(45deg, var(--primary), #2a9d8f);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1.3rem;
+            color: white;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(42, 157, 143, 0.4);
+            border: none;
+        }
+        
+        .promo-offer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/brushed-alum.png');
+            opacity: 0.15;
+        }
+        
+        .promo-offer span {
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 1.4rem;
+        }
+        
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/light-wool.png');
+            opacity: 0.03;
+            pointer-events: none;
+        }
+        
+        /* إصلاحات التخطيط */
+        .products-page {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <h2>TAZARINE</h2>
+                <span class="logo-subtitle">HOME&DECO</span>
+            </div>
+            
+            <!-- قائمة سطح المكتب المحسنة -->
+            <nav class="desktop-nav">
+                <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+                <a href="products.html"><i class="fas fa-box-open"></i> المنتجات</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a>
+                <a href="contact.html"><i class="fas fa-phone-alt"></i> اتصل بنا</a>
+            </nav>
+            <!-- زر القائمة الجانبية -->
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i> القائمة
+            </button>
+        </div>
+        
+        <!-- القائمة الجانبية المحسنة -->
+        <div class="sidebar">
+            <button class="close-btn">&times;</button>
+            <nav class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+                <a href="products.html"><i class="fas fa-box-open"></i> المنتجات</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a>
+                <a href="contact.html"><i class="fas fa-phone-alt"></i> اتصل بنا</a>
+                <a href="#"><i class="fas fa-tag"></i> العروض</a>
+                <a href="#"><i class="fas fa-star"></i> المميزات</a>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="main-content">
+        <div class="products-page">
+            <div class="office-header">
+                <h1>صفقات خاطفة على الأثاث المكتبي</h1>
+                <p>اكتشف أفضل العروض المحدودة الوقت على الأثاث المكتبي عالي الجودة</p>
+            </div>
+            
+            <!-- قسم الصفقات الخاطفة المحسّن -->
+            <div class="lightning-deals-section">
+                <div class="pattern-bg"></div>
+                <div class="deals-header">
+                    <h2 class="deals-title"><i class="fas fa-bolt"></i> صفقات خاطفة - طاولات</h2>
+                    <a href="#tables" class="view-all-link">عرض الكل <i class="fas fa-arrow-left"></i></a>
+                </div>
+                
+                <div class="deals-container">
+                    <!-- سيتم إنشاء الصفقات ديناميكيًا هنا -->
+                    <div id="lightningDealsTables"></div>
+                </div>
+                
+                <div class="time-offer">
+                    ⏳ عرض لفترة محدودة - تنتهي خلال 24 ساعة!
+                </div>
+                
+                <div class="featured-product">
+                    <h3 class="featured-title">هاتف أندرويد 3A</h3>
+                    <div class="featured-specs">8GB+64GB</div>
+                    <div class="featured-specs">أجهزة منزلية ذكية</div>
+                    <div class="featured-price">343 درهم</div>
+                </div>
+                
+                <div class="promo-offer">
+                    استمتع بخصم إضافي <span>40 درهم</span> على مشتريات 400 درهم+ 😊💤
+                </div>
+            </div>
+            
+            <!-- سيتم إنشاء الأقسام ديناميكيًا هنا -->
+            <div id="categorySections" class="container"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+        
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>روابط سريعة</h4>
+                <a href="about.html"><i class="fas fa-info-circle"></i> عن المتجر</a>
+                <a href="return-policy.html"><i class="fas fa-exchange-alt"></i> سياسة الإرجاع</a>
+                <a href="shipping.html"><i class="fas fa-truck"></i> الشحن والتوصيل</a>
+                <a href="faq.html"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</a>
+            </div>
+            <div class="footer-section">
+                <h4>اتصل بنا</h4>
+                <p><i class="fas fa-phone"></i> 0700720490</p>
+                <p><i class="fas fa-envelope"></i> tazarinedeco@gmail.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> شارع محمد السادس، الدار البيضاء</p>
+                <p><i class="fas fa-clock"></i> الأحد-الخميس: 9 صباحاً - 6 مساءً</p>
+            </div>
+            <div class="footer-section">
+                <h4>تابعنا</h4>
+                <p>اشترك في نشرتنا الإخبارية لتصلك أحدث العروض</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>tazarine home&deco 2025 - جميع الحقوق محفوظة ©</p>
+        </div>
+    </footer>
+    
+    <script>
+        // بيانات المنتجات الكاملة
+        const products = [
+            {
+                id: 1,
+                name: 'مكتب عصري بتصميم أنيق',
+                price: 8800,
+                description: 'مكتب عصري بتصميم أنيق مع مساحة تخزين واسعة',
+                images: ['https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80'],
+                category: 'طاولات',
+                specs: ['خشب وزجاج', '160x80x75 سم', 'أبيض وبني'],
+                soldCount: 15000
+            },
+            {
+                id: 2,
+                name: 'طاولة مكتب زجاجية فاخرة',
+                price: 2200,
+                description: 'طاولة مكتب زجاجية فاخرة مع قاعدة معدنية متينة',
+                images: ['https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80'],
+                category: 'طاولات',
+                specs: ['زجاج وفولاذ', '180x90x75 سم', 'شفاف وأسود'],
+                soldCount: 22000
+            },
+            {
+                id: 3,
+                name: 'خزانة ملفات حديثة بسعة كبيرة',
+                price: 1500,
+                description: 'خزانة ملفات حديثة بسعة كبيرة وأدراج متعددة',
+                images: ['https://images.unsplash.com/photo-1617103996702-96ff29b1c467?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80'],
+                category: 'خزانات',
+                specs: ['خشب صناعي', '120x40x180 سم', 'أبيض ورمادي'],
+                soldCount: 38000
+            },
+            {
+                id: 4,
+                name: 'خزانة وثائق مكتبية بتصميم عصري',
+                price: 2100,
+                description: 'خزانة وثائق بتصميم عصري مع أقفال أمان',
+                images: ['https://images.unsplash.com/photo-1601760562234-9814eea6663a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80'],
+                category: 'خزانات',
+                specs: ['معدن', '90x40x180 سم', 'رمادي وأبيض'],
+                soldCount: 2800
+            },
+            {
+                id: 5,
+                name: 'طاولة اجتماعات كبيرة بتصميم عصري',
+                price: 4500,
+                description: 'طاولة اجتماعات كبيرة بتصميم عصري',
+                images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80'],
+                category: 'طاولات',
+                specs: ['خشب وزجاج', '240x120x75 سم', 'بني وأسود'],
+                soldCount: 8500
+            },
+            {
+                id: 6,
+                name: 'كرسي مكتب مريح مع دعم للظهر',
+                price: 1200,
+                description: 'كرسي مكتب مريح مع دعم للظهر ومساند للذراعين',
+                images: ['https://images.unsplash.com/photo-1505798577917-a65157d3320a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80'],
+                category: 'كراسي',
+                specs: ['جلد صناعي', '60x60x110 سم', 'أسود ورمادي'],
+                soldCount: 42000
+            },
+            {
+                id: 7,
+                name: 'كرسي مكتب فاخر بتصميم حديث',
+                price: 2500,
+                description: 'كرسي مكتب فاخر بتصميم حديث ومريح',
+                images: ['https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80'],
+                category: 'كراسي',
+                specs: ['جلد طبيعي', '65x65x115 سم', 'أسود وبني'],
+                soldCount: 18500
+            },
+            {
+                id: 8,
+                name: 'كرسي مكتب إداري مع دعم قوي',
+                price: 1800,
+                description: 'كرسي مكتب إداري مع دعم قوي للظهر',
+                images: ['https://images.unsplash.com/photo-1519947486511-46149fa0a254?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80'],
+                category: 'كراسي',
+                specs: ['قماش عالي الجودة', '62x62x112 سم', 'أزرق ورمادي'],
+                soldCount: 32000
+            },
+            {
+                id: 9,
+                name: 'رف كتب خشبي بتصميم أنيق',
+                price: 900,
+                description: 'رف كتب خشبي بتصميم أنيق ومتين',
+                images: ['https://images.unsplash.com/photo-1497215842964-222b430dc094?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80'],
+                category: 'رفوف',
+                specs: ['خشب طبيعي', '100x30x180 سم', 'بني فاتح وبني غامق'],
+                soldCount: 12500
+            },
+            {
+                id: 10,
+                name: 'رف كتب معدني بتصميم عصري',
+                price: 750,
+                description: 'رف كتب معدني بتصميم عصري ومتين',
+                images: ['https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80'],
+                category: 'رفوف',
+                specs: ['معدن', '90x30x170 سم', 'أسود وأبيض'],
+                soldCount: 19000
+            },
+            {
+                id: 11,
+                name: 'رف زجاجي فاخر مع قاعدة معدنية',
+                price: 1100,
+                description: 'رف زجاجي فاخر مع قاعدة معدنية',
+                images: ['https://images.unsplash.com/photo-1567538096630-e0c55bd6354f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80'],
+                category: 'رفوف',
+                specs: ['زجاج ومعدن', '80x25x150 سم', 'شفاف وأسود'],
+                soldCount: 8700
+            },
+            {
+                id: 12,
+                name: 'مكتب زاوية بتصميم عصري',
+                price: 3200,
+                description: 'مكتب زاوية بتصميم عصري ومساحة عمل واسعة',
+                images: ['https://images.unsplash.com/photo-1585637071663-799845ad5212?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80'],
+                category: 'مكاتب',
+                specs: ['خشب صناعي', '140x140x75 سم', 'أبيض ورمادي'],
+                soldCount: 14300
+            }
+        ];
+
+        // تقسيم المنتجات إلى فئات
+        const categories = {
+            'طاولات': products.filter(p => p.category === 'طاولات'),
+            'خزانات': products.filter(p => p.category === 'خزانات'),
+            'كراسي': products.filter(p => p.category === 'كراسي'),
+            'رفوف': products.filter(p => p.category === 'رفوف'),
+            'مكاتب': products.filter(p => p.category === 'مكاتب')
+        };
+
+        // دالة لإنشاء قسم الصفقات الخاطفة لكل فئة
+        function createLightningDeals() {
+            const tablesDeals = document.getElementById('lightningDealsTables');
+            const tablesProducts = categories['طاولات'];
+            
+            // عرض أول 4 منتجات من فئة الطاولات
+            tablesProducts.slice(0, 4).forEach(product => {
+                const dealHTML = `
+                    <div class="lightning-deal">
+                        <div class="lightning-tag">⚡ صفقة خاطفة</div>
+                        <img src="${product.images[0]}" alt="${product.name}" class="deal-image">
+                        <div class="deal-price">${product.price.toLocaleString('ar')} درهم</div>
+                        <div class="deal-sold">${product.soldCount.toLocaleString('ar')}+ مبيع</div>
+                        <div class="deal-name">${product.name}</div>
+                        <div class="deal-specs">${product.specs[0]}</div>
+                    </div>
+                `;
+                tablesDeals.innerHTML += dealHTML;
+            });
+        }
+
+        // دالة لإنشاء قسم لكل فئة
+        function createCategorySections() {
+            const container = document.getElementById('categorySections');
+            container.innerHTML = '';
+            
+            Object.entries(categories).forEach(([categoryName, categoryProducts], index) => {
+                if (categoryProducts.length === 0) return;
+                
+                // استبدال المسافات بشرطات في ال id
+                const categoryId = categoryName.replace(/\s+/g, '-');
+                
+                const sectionHTML = `
+                    <section class="category-section" id="${categoryId}">
+                        <div class="pattern-bg"></div>
+                        <div class="category-header">
+                            <h2 class="category-title">${categoryName}</h2>
+                            <a href="#" class="view-all-link">عرض الكل <i class="fas fa-arrow-left"></i></a>
+                        </div>
+                        
+                        <div class="products-container">
+                            <button class="scroll-btn left"><i class="fas fa-chevron-right"></i></button>
+                            <div class="scrollable-row" id="${categoryId}-row">
+                                ${categoryProducts.map(product => `
+                                    <div class="product-card">
+                                        <img src="${product.images[0]}" alt="${product.name}" class="product-image">
+                                        <div class="product-info">
+                                            <h3 class="product-title">${product.name}</h3>
+                                            <span class="product-price">${product.price.toLocaleString('ar')} درهم</span>
+                                            <div class="sold-badge">${product.soldCount.toLocaleString('ar')}+ مبيع</div>
+                                            <div class="product-specs">
+                                                ${product.specs.map(spec => `<div>${spec}</div>`).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <button class="scroll-btn right"><i class="fas fa-chevron-left"></i></button>
+                        </div>
+                    </section>
+                `;
+                
+                container.innerHTML += sectionHTML;
+                
+                // إضافة فواصل بين الأقسام
+                if (index < Object.keys(categories).length - 1) {
+                    container.innerHTML += '<div class="section-divider"></div>';
+                }
+            });
+            
+            // إضافة مستمعي الأحداث لأزرار التمرير
+            document.querySelectorAll('.scroll-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const container = this.parentElement;
+                    const scrollableRow = container.querySelector('.scrollable-row');
+                    const scrollAmount = 400; // مقدار التمرير
+                    
+                    if (this.classList.contains('left')) {
+                        scrollableRow.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    } else {
+                        scrollableRow.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        // إعداد القائمة الجانبية
+        function setupSidebar() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const closeBtn = document.querySelector('.close-btn');
+            
+            if (menuToggle && sidebar && closeBtn) {
+                menuToggle.addEventListener('click', () => {
+                    sidebar.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+                
+                closeBtn.addEventListener('click', () => {
+                    sidebar.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+                
+                document.addEventListener('click', (e) => {
+                    if (!sidebar.contains(e.target) && !e.target.closest('.menu-toggle') && 
+                        sidebar.classList.contains('active')) {
+                        sidebar.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+        }
+
+        // تهيئة الصفحة عند التحميل
+        document.addEventListener('DOMContentLoaded', () => {
+            createLightningDeals();
+            createCategorySections();
+            setupSidebar();
+            
+            // إضافة تأثيرات عند التمرير
+            window.addEventListener('scroll', () => {
+                const elements = document.querySelectorAll('.category-section, .lightning-deals-section');
+                elements.forEach(el => {
+                    const position = el.getBoundingClientRect();
+                    if (position.top < window.innerHeight * 0.8) {
+                        el.style.opacity = 1;
+                        el.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

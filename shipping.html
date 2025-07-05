@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سياسة الشحن - TAZARINE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3CDDD3;
+            --primary-dark: #1e7167;
+            --secondary: #e76f51;
+            --dark: #264653;
+            --light: #f8f9fa;
+            --accent: #e9c46a;
+            --gray: #e9ecef;
+            --text: #343a40;
+            --shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* تنسيق الهيدر المحسّن */
+        .header-top {
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .logo h2 {
+            color: var(--accent);
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-top: 0.2rem;
+            color: var(--light);
+            letter-spacing: 1px;
+        }
+
+        /* القائمة الجانبية */
+        .menu-toggle {
+            display: none;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: var(--dark);
+            cursor: pointer;
+            z-index: 1001;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .menu-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100%;
+            background: var(--light);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+            transition: 0.4s;
+            z-index: 999;
+            padding-top: 80px;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: rgba(42, 157, 143, 0.1);
+        }
+
+        .nav-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        /* قائمة سطح المكتب المحسنة */
+        .desktop-nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .desktop-nav a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 10px 22px;
+            border-radius: 30px;
+            border: 2px solid rgba(233, 196, 106, 0.3);
+            background: rgba(38, 70, 83, 0.8);
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .desktop-nav a:hover {
+            background: var(--accent);
+            color: var(--dark);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 50px 5% 80px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        
+        /* تنسيقات الصفحة */
+        .shipping-hero {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 80px 30px;
+            margin-bottom: 50px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .shipping-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/45-degree-fabric-light.png');
+            opacity: 0.1;
+        }
+        
+        .shipping-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .shipping-hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .shipping-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .shipping-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 5px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shipping-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .shipping-card h2 {
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .shipping-card h2 i {
+            background: rgba(42, 157, 143, 0.15);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+        
+        .shipping-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .shipping-card li {
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--gray);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .shipping-card li:last-child {
+            border-bottom: none;
+        }
+        
+        .shipping-card li i {
+            color: var(--primary);
+            margin-top: 5px;
+        }
+        
+        .shipping-card .highlight {
+            background: rgba(233, 196, 106, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .shipping-card .highlight p {
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .shipping-card .price-tag {
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: 800;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .shipping-map {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+            grid-column: 1 / -1;
+        }
+        
+        .shipping-map h2 {
+            color: var(--primary-dark);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .map-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .map-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .map-info ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .map-info li {
+            padding: 15px 0;
+            border-bottom: 1px dashed var(--gray);
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .map-info li:last-child {
+            border-bottom: none;
+        }
+        
+        .map-info li i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            min-width: 25px;
+        }
+        
+        .map-visual {
+            flex: 1;
+            min-width: 300px;
+            background: var(--gray);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+        
+        .map-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #666;
+        }
+        
+        .map-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .shipping-faq {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+            grid-column: 1 / -1;
+        }
+        
+        .shipping-faq h2 {
+            color: var(--primary-dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .faq-item {
+            margin-bottom: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .faq-question {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: white;
+        }
+        
+        .faq-answer-content {
+            padding: 20px 0;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 20px;
+        }
+        
+        .contact-support {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 50px;
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-support h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .contact-support p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+        
+        .support-btn {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .support-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            background: white;
+        }
+        
+        footer {
+            display: flex;
+            flex-direction: column;
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 40px 20px 20px;
+            width: 100%;
+            margin-top: auto;
+            position: relative;
+        }
+        
+        .footer-wave {
+            position: absolute;
+            top: -60px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        
+        .footer-wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 60px;
+        }
+        
+        .footer-wave .shape-fill {
+            fill: var(--dark);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            padding: 20px;
+            z-index: 2;
+        }
+        
+        .footer-section {
+            position: relative;
+            padding: 15px;
+        }
+        
+        .footer-section h4 {
+            color: var(--accent);
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .footer-section a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            display: flex;
+            margin: 15px 0;
+            align-items: center;
+            transition: var(--transition);
+            gap: 12px;
+            padding: 8px 0;
+            font-size: 1.05rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .footer-section p {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            position: relative;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding: 20px 0 10px;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            z-index: 2;
+        }
+        
+        @media (max-width: 992px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .shipping-hero {
+                padding: 60px 20px;
+            }
+            
+            .shipping-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .shipping-card {
+                padding: 25px;
+            }
+        }
+
+        @media (min-width: 993px) {
+            .sidebar {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                padding: 0.8rem 1.2rem;
+            }
+            
+            .logo h2 {
+                font-size: 1.7rem;
+            }
+            
+            .shipping-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .shipping-hero p {
+                font-size: 1.1rem;
+            }
+            
+            .shipping-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <h2>TAZARINE</h2>
+                <span class="logo-subtitle">HOME&DECO</span>
+            </div>
+            
+            <!-- قائمة سطح المكتب المحسنة -->
+            <nav class="desktop-nav">
+                <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+                <a href="products.html"><i class="fas fa-box-open"></i> المنتجات</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a>
+                <a href="contact.html"><i class="fas fa-phone-alt"></i> اتصل بنا</a>
+            </nav>
+            <!-- زر القائمة الجانبية -->
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i> القائمة
+            </button>
+        </div>
+        
+        <!-- القائمة الجانبية المحسنة -->
+        <div class="sidebar">
+            <button class="close-btn">&times;</button>
+            <nav class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+                <a href="products.html"><i class="fas fa-box-open"></i> المنتجات</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a>
+                <a href="contact.html"><i class="fas fa-phone-alt"></i> اتصل بنا</a>
+                <a href="#"><i class="fas fa-tag"></i> العروض</a>
+                <a href="#"><i class="fas fa-star"></i> المميزات</a>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="main-content">
+        <div class="shipping-hero">
+            <h1>سياسة الشحن والتوصيل</h1>
+            <p>نسعى في TAZARINE لتقديم أفضل تجربة شحن وتوصيل لعملائنا الكرام. اكتشف خياراتنا وخدماتنا المتميزة</p>
+        </div>
+        
+        <div class="shipping-container">
+            <!-- طرق الشحن -->
+            <div class="shipping-card">
+                <h2><i class="fas fa-shipping-fast"></i> طرق الشحن</h2>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> التوصيل السريع (24-48 ساعة) داخل المدن الرئيسية</li>
+                    <li><i class="fas fa-check-circle"></i> التوصيل القياسي (3-5 أيام عمل) لجميع مناطق المغرب</li>
+                    <li><i class="fas fa-check-circle"></i> التوصيل إلى نقاط التسليم (Pickup Points)</li>
+                    <li><i class="fas fa-check-circle"></i> التوصيل الدولي لجميع الدول العربية</li>
+                </ul>
+                <div class="highlight">
+                    <p>نقدم خيار التوصيل المجاني لجميع الطلبات فوق 500 درهم داخل المدن الرئيسية</p>
+                    <div class="price-tag">شحن مجاني</div>
+                </div>
+            </div>
+            
+            <!-- تكاليف الشحن -->
+            <div class="shipping-card">
+                <h2><i class="fas fa-tags"></i> تكاليف الشحن</h2>
+                <ul>
+                    <li><i class="fas fa-truck"></i> الدار البيضاء والرباط: 25 درهم</li>
+                    <li><i class="fas fa-truck"></i> المدن الكبرى: 35 درهم</li>
+                    <li><i class="fas fa-truck"></i> المناطق البعيدة: 45 درهم</li>
+                    <li><i class="fas fa-truck"></i> الشحن الدولي: حسب الوجهة والوزن</li>
+                </ul>
+                <div class="highlight">
+                    <p>استخدم كود الخصم <strong>SHIPFREE</strong> للحصول على شحن مجاني لأول طلب لك</p>
+                </div>
+            </div>
+            
+            <!-- مدة التوصيل -->
+            <div class="shipping-card">
+                <h2><i class="fas fa-clock"></i> مدة التوصيل</h2>
+                <ul>
+                    <li><i class="fas fa-check"></i> الدار البيضاء والرباط: 1-2 أيام عمل</li>
+                    <li><i class="fas fa-check"></i> مراكش، فاس، طنجة: 2-3 أيام عمل</li>
+                    <li><i class="fas fa-check"></i> المدن الأخرى: 3-5 أيام عمل</li>
+                    <li><i class="fas fa-check"></i> المناطق النائية: 5-7 أيام عمل</li>
+                    <li><i class="fas fa-check"></i> الشحن الدولي: 7-14 يوم عمل</li>
+                </ul>
+            </div>
+            
+            <!-- تتبع الشحنة -->
+            <div class="shipping-card">
+                <h2><i class="fas fa-map-marked-alt"></i> تتبع الشحنة</h2>
+                <ul>
+                    <li><i class="fas fa-mobile-alt"></i> تتبع شحنتك عبر تطبيق TAZARINE</li>
+                    <li><i class="fas fa-envelope"></i> إشعارات عبر البريد الإلكتروني والرسائل النصية</li>
+                    <li><i class="fas fa-headset"></i> خدمة العملاء متاحة 24/7 لمتابعة شحنتك</li>
+                    <li><i class="fas fa-qrcode"></i> مسح رمز التتبع للوصول الفوري لمعلومات الشحن</li>
+                </ul>
+                <div class="highlight">
+                    <p>بعد تأكيد الطلب، ستتلقى رابط التتبع عبر البريد الإلكتروني والرسائل النصية</p>
+                </div>
+            </div>
+            
+            <!-- منطقة التغطية -->
+            <div class="shipping-map">
+                <h2><i class="fas fa-map-marker-alt"></i> منطقة التغطية</h2>
+                <div class="map-container">
+                    <div class="map-info">
+                        <p>نحن نغطي جميع أنحاء المغرب بالإضافة إلى العديد من الدول العربية. فيما يلي مناطقنا الرئيسية:</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> جميع المدن المغربية الرئيسية</li>
+                            <li><i class="fas fa-check"></i> الجزائر، تونس، ليبيا</li>
+                            <li><i class="fas fa-check"></i> مصر، السعودية، الإمارات</li>
+                            <li><i class="fas fa-check"></i> الأردن، لبنان، العراق</li>
+                            <li><i class="fas fa-check"></i> الكويت، قطر، البحرين، عمان</li>
+                            <li><i class="fas fa-check"></i> موريتانيا، السودان، اليمن</li>
+                        </ul>
+                        <p>للتأكد من التغطية في منطقتك، يمكنك التواصل مع خدمة العملاء.</p>
+                    </div>
+                    <div class="map-visual">
+                        <div class="map-placeholder">
+                            <i class="fas fa-map"></i>
+                            <h3>خريطة تغطية الشحن</h3>
+                            <p>جميع مناطق المغرب والدول العربية</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الأسئلة الشائعة -->
+            <div class="shipping-faq">
+                <h2><i class="fas fa-question-circle"></i> الأسئلة الشائعة حول الشحن</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>كيف يمكنني تتبع شحنتي؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            يمكنك تتبع شحنتك بعدة طرق:
+                            <ul>
+                                <li>من خلال رابط التتبع الذي نرسله على بريدك الإلكتروني</li>
+                                <li>بواسطة تطبيق TAZARINE على هاتفك الذكي</li>
+                                <li>من خلال صفحة "تتبع الطلب" على موقعنا</li>
+                                <li>عن طريق التواصل مع خدمة العملاء عبر الهاتف أو الدردشة</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ما هي مدة التوصيل المتوقعة؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            تختلف مدة التوصيل حسب موقعك وطريقة الشحن المختارة:
+                            <ul>
+                                <li>المدن الرئيسية: 1-2 أيام عمل</li>
+                                <li>المدن الأخرى: 2-5 أيام عمل</li>
+                                <li>المناطق النائية: 5-7 أيام عمل</li>
+                                <li>الشحن الدولي: 7-14 يوم عمل</li>
+                            </ul>
+                            قد تطول المدة في المناسبات الخاصة أو العطل الرسمية.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>هل تتوفر خدمة الشحن السريع؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            نعم، نوفر خدمة الشحن السريع في المدن الرئيسية:
+                            <ul>
+                                <li>التوصيل في نفس اليوم (للطلبات قبل 12 ظهرًا)</li>
+                                <li>التوصيل خلال 24 ساعة</li>
+                                <li>التوصيل في وقت محدد حسب اختيارك</li>
+                            </ul>
+                            تكلفة الشحن السريع تبدأ من 50 درهم وتختلف حسب الموقع والوقت.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>هل يمكن تغيير عنوان التوصيل بعد الطلب؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            نعم، يمكنك تغيير عنوان التوصيل في الحالات التالية:
+                            <ul>
+                                <li>قبل شحن الطلب: يمكنك تغيير العنوان من حسابك أو التواصل مع خدمة العملاء</li>
+                                <li>بعد شحن الطلب: يمكننا إعادة توجيه الشحنة مقابل رسوم إضافية</li>
+                            </ul>
+                            يرجى التواصل مع خدمة العملاء في أسرع وقت لتغيير عنوان التوصيل.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ماذا لو لم أكن متواجدًا وقت التوصيل؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            في حال عدم تواجدك وقت التوصيل:
+                            <ul>
+                                <li>سيحاول مندوب التوصيل الاتصال بك لترتيب موعد آخر</li>
+                                <li>يمكنك اختيار استلام الشحنة من أقرب نقطة تسليم</li>
+                                <li>ستترك الشحنة في مكان آمن إذا وافقت على ذلك مسبقًا</li>
+                            </ul>
+                            بعد ثلاث محاولات فاشلة، سيتم إرجاع الشحنة إلى المستودع وستتحمل تكاليف إعادة الشحن.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- دعم العملاء -->
+            <div class="contact-support">
+                <h2>هل تحتاج مساعدة؟</h2>
+                <p>فريق دعم العملاء لدينا جاهز للإجابة على جميع استفساراتك المتعلقة بالشحن والتوصيل على مدار الساعة</p>
+                <button class="support-btn">
+                    <i class="fas fa-headset"></i> تواصل مع الدعم الآن
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+        
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>روابط سريعة</h4>
+                <a href="index.html"><i class="fas fa-info-circle"></i> عن المتجر</a>
+                <a href="shipping.html"><i class="fas fa-truck"></i> الشحن والتوصيل</a>
+                <a href="return-policy.html"><i class="fas fa-exchange-alt"></i> سياسة الإرجاع</a>
+                <a href="faq.html"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</a>
+            </div>
+            <div class="footer-section">
+                <h4>اتصل بنا</h4>
+                <p><i class="fas fa-phone"></i> 0700720490</p>
+                <p><i class="fas fa-envelope"></i> tazarinedeco@gmail.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> شارع محمد السادس، الدار البيضاء</p>
+                <p><i class="fas fa-clock"></i> الأحد-الخميس: 9 صباحاً - 6 مساءً</p>
+            </div>
+            <div class="footer-section">
+                <h4>تابعنا</h4>
+                <p>اشترك في نشرتنا الإخبارية لتصلك أحدث العروض</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>tazarine home&deco 2025 - جميع الحقوق محفوظة ©</p>
+        </div>
+    </footer>
+    
+    <script>
+        // إعداد القائمة الجانبية
+        function setupSidebar() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const closeBtn = document.querySelector('.close-btn');
+            
+            if (menuToggle && sidebar && closeBtn) {
+                menuToggle.addEventListener('click', () => {
+                    sidebar.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+                
+                closeBtn.addEventListener('click', () => {
+                    sidebar.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+                
+                document.addEventListener('click', (e) => {
+                    if (!sidebar.contains(e.target) && !e.target.closest('.menu-toggle') && 
+                        sidebar.classList.contains('active')) {
+                        sidebar.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+        }
+
+        // إعداد الأسئلة الشائعة
+        function setupFAQ() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const faqItem = question.parentElement;
+                    faqItem.classList.toggle('active');
+                    
+                    const icon = question.querySelector('i');
+                    if (faqItem.classList.contains('active')) {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                });
+            });
+        }
+
+        // تهيئة الصفحة عند التحميل
+        document.addEventListener('DOMContentLoaded', () => {
+            setupSidebar();
+            setupFAQ();
+        });
+    </script>
+</body>
+</html>
